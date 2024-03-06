@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2024 Khalil Estell
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <libhal-stm32f4/output_pin.hpp>
 #include <libhal-armcortex/dwt_counter.hpp>
+#include <libhal-stm32f4/output_pin.hpp>
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
 
@@ -21,14 +21,23 @@ hal::status application()
 {
   using namespace hal::literals;
   // TODO(libhal-target): Set the correct frequency and output pin driver
-  hal::cortex_m::dwt_counter clock(1.0_MHz);
-  auto led = HAL_CHECK(hal::stm32f4::output_pin::create());
-
+  hal::cortex_m::dwt_counter clock(16.0_MHz);
+  auto led = HAL_CHECK(hal::stm32f4::output_pin::get(hal::stm32f4::peripheral::gpio_a, 5));
+  HAL_CHECK(led.level(true));
+  
   while (true) {
-    using namespace std::chrono_literals;
+      volatile int i = 0;
+    // using namespace std::chrono_literals;
     HAL_CHECK(led.level(false));
-    hal::delay(clock, 200ms);
+    // hal::delay(clock, 200ms);
+    while(i < 100){
+      i = i+1;
+    }
     HAL_CHECK(led.level(true));
-    hal::delay(clock, 200ms);
+    // hal::delay(clock, 200ms);
+    i = 0;
+    while(i < 100){
+      i = i+1;
+    }
   }
 }

@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Khalil Estell
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ libhal_test_and_make_library(
 
   SOURCES
   src/output_pin.cpp
+  src/pin.cpp
+  src/power.cpp
 
   TEST_SOURCES
   tests/output_pin.test.cpp
